@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Create MDC Rules in Rules Directory
+
+When creating new MDC rules:
+
+1. Save all MDC rule files in the `.cursor/rules` directory
+2. Create each rule as a separate file
+3. Use kebab-case for filenames (e.g., `rule-name.mdc`)
+4. Include a clear title and description for each rule
+5. Format the content of the rule clearly with:
+   - A title (H1)
+   - A brief description
+   - Specific instructions using numbered or bulleted lists
+   - Examples when helpful
+6. Copy the file to the `~/src/Personal_Cursor_Rules` directory after creation.
+
+## Example:
+
+When I ask you to create a rule for handling code documentation:
+
+Create a file at `.cursor/rules/code-documentation.mdc` with appropriate content.
+
+## Implementation
+
+Whenever a user requests a new rule, create it in the `.cursor/rules` directory with:
+- Filename in kebab-case: `rule-name.mdc`
+- Clear, concise content
+- Proper formatting for readability
+- Specific, actionable instructions 

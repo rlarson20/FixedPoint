@@ -1,0 +1,86 @@
+# Bun Usage in FixedPoint
+
+## Description
+
+This project uses Bun as the JavaScript runtime and package manager. All JavaScript/TypeScript development should use Bun's tooling and conventions.
+
+## Instructions
+
+1. **Package Management**
+   - Use `bun install` instead of `npm install` or `yarn install`
+   - Use `bun add <package>` to add new dependencies
+   - Use `bun remove <package>` to remove dependencies
+
+2. **Scripts**
+   - Use `bun run <script>` to run scripts defined in package.json
+   - Use `bun test` for running tests
+   - Use `bun build` for building the project
+
+3. **TypeScript**
+   - Use `bun build` for TypeScript compilation
+   - Configure TypeScript in `tsconfig.json` with Bun-compatible settings
+   - Use `bun --watch` for development with hot reloading
+
+4. **Development Workflow**
+   - Use `bun run dev` for development
+   - Use `bun run build` for production builds
+   - Use `bun test` for running tests
+   - Use `bun run lint` for linting
+
+5. **Dependencies**
+   - Keep dependencies up to date using `bun update`
+   - Use `bun.lockb` for dependency locking
+   - Commit `bun.lockb` to version control
+
+## Example Commands
+
+```bash
+# Install dependencies
+bun install
+
+# Add a new dependency
+bun add package-name
+
+# Run a script
+bun run build
+
+# Run tests
+bun test
+
+# Development with watch mode
+bun --watch run dev
+```
+
+## Configuration
+
+1. **package.json**
+   ```json
+   {
+     "type": "module",
+     "scripts": {
+       "build": "bun build ./src/index.ts --outdir ./dist",
+       "dev": "bun --watch build ./src/index.ts --outdir ./dist",
+       "test": "bun test"
+     }
+   }
+   ```
+
+2. **tsconfig.json**
+   ```json
+   {
+     "compilerOptions": {
+       "module": "ESNext",
+       "moduleResolution": "bundler",
+       "types": ["bun-types"]
+     }
+   }
+   ```
+
+## Best Practices
+
+1. Always use Bun's built-in features when available
+2. Keep the `bun.lockb` file in version control
+3. Use Bun's native TypeScript support
+4. Leverage Bun's fast package installation
+5. Use Bun's built-in test runner
+6. Take advantage of Bun's watch mode for development 

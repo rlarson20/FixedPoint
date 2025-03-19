@@ -1,0 +1,82 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Firefox Extension Implementation
+
+This rule defines the approach for developing the Firefox browser extension component of the FixedPoint project.
+
+## Tech Stack & Dependencies
+
+1. Use TypeScript with these core libraries:
+   - `webextension-polyfill` for cross-browser compatibility
+   - `@types/firefox-webext-browser` for type definitions
+   - Use React only if UI complexity requires it
+
+2. Keep the extension lightweight:
+   - Prefer vanilla browser-native HTML elements
+   - Avoid unnecessary external dependencies
+   - Focus on robust functionality over complex UI
+
+## Core Functionality
+
+1. Implement all required input modes:
+   - Textarea for manual URL entry
+   - Current tabs selection via `browser.tabs.query()`
+   - Drag-and-drop URL list support
+
+2. Handle vault path configuration:
+   - Store in `browser.storage.local`
+   - Validate path exists via server ping
+   - Provide clear feedback on configuration status
+
+3. Follow the standard API communication pattern:
+   ```typescript
+   fetch('http://localhost:5000/process', {
+     method: 'POST',
+     headers: {'Content-Type': 'application/json'},
+     body: JSON.stringify({
+       vault_path: config.vaultPath,
+       links: cleanedLinks,
+       close_tabs: closeTabsFlag
+     })
+   });
+   ```
+
+## UI Implementation
+
+1. Use a simple but effective UI structure:
+   ```html
+   <!-- popup.html -->
+   <input type=\"text\" id=\"vault-path\">
+   <textarea id=\"links-input\"></textarea>
+   <button id=\"submit\">Process Links</button>
+   ```
+
+2. Provide clear visual feedback:
+   - Loading indicators during processing
+   - Success/error messages
+   - Link processing status updates
+
+3. Handle permissions appropriately:
+   - Request minimal required permissions
+   - Clearly explain why each permission is needed
+   - Fail gracefully if permissions are denied
+
+## Testing & Deployment
+
+1. Follow the testing strategy:
+   - Unit Tests with Jest
+   - Mock browser APIs using `jest-webextension-mock`
+   - Test API communication with local test server
+
+2. Prepare for distribution:
+   - Package for Firefox Add-ons store
+   - Support manual loading via `about:debugging`
+   - Document installation process clearly
+
+3. Focus on security:
+   - Limit to local operation initially
+   - Implement appropriate validation
+   - Use secure communication methods 

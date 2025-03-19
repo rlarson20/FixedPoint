@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FixedPoint</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    label {
+      font-weight: 500;
+    }
+    input[type="text"], textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    .button-group {
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #0060df;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #003eaa;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status {
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .success {
+      background-color: #e6ffe6;
+      color: #006600;
+    }
+    .error {
+      background-color: #ffe6e6;
+      color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-group">
+      <label for="vault-path">Obsidian Vault Path:</label>
+      <input type="text" id="vault-path" placeholder="Enter the path to your Obsidian vault">
+    </div>
+    
+    <div class="input-group">
+      <label for="links-input">Links (one per line):</label>
+      <textarea id="links-input" placeholder="Enter URLs or drag and drop them here"></textarea>
+    </div>
+    
+    <div class="checkbox-group">
+      <input type="checkbox" id="close-tabs">
+      <label for="close-tabs">Close tabs after processing</label>
+    </div>
+    
+    <div class="button-group">
+      <button id="get-tabs">Get Current Tabs</button>
+      <button id="process-links">Process Links</button>
+    </div>
+    
+    <div id="status" class="status" style="display: none;"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 

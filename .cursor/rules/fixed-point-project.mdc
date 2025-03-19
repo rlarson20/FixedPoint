@@ -1,0 +1,78 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# FixedPoint Project Implementation Guide
+
+This rule outlines the implementation approach for the FixedPoint project, a system that integrates Firefox with Obsidian for automatic note creation and management.
+
+## Architecture Components
+
+1. Follow the core three-component architecture:
+   - Firefox Extension (TypeScript)
+   - Python Server (Flask)
+   - Obsidian Vault Integration
+
+2. Maintain the established data flow:
+   - User provides links/tabs via extension
+   - Extension sends JSON to server
+   - Server analyzes vault and matches/creates notes
+   - Extension handles tab management based on response
+
+## Firefox Extension Implementation
+
+1. Use TypeScript with `webextension-polyfill` and `@types/firefox-webext-browser`
+2. Implement all required input modes:
+   - Manual URL entry via textarea
+   - Current tabs selection using browser API
+   - Drag-and-drop URL support
+3. Store vault path in `browser.storage.local`
+4. Keep UI simple with browser-native HTML elements
+5. Follow the established API communication pattern for server interactions
+
+## Server Implementation
+
+1. Build with Flask and required libraries:
+   - `Watchdog` for filesystem monitoring
+   - `python-frontmatter` for metadata parsing
+   - `scikit-learn` for TF-IDF vectorization
+2. Implement the core `/process` endpoint as specified
+3. Follow the hybrid matching approach:
+   - First pass: Filename/keyword matching
+   - Fallback: TF-IDF on note content
+   - Final fallback: Directory similarity
+
+## Vault Structure Handling
+
+1. Use the defined `VaultNode` interface for representation
+2. Implement proper traversal and parsing functions
+3. Extract and handle frontmatter metadata appropriately
+
+## Error Handling & Testing
+
+1. Address all identified failure points:
+   - Invalid vault paths
+   - Permission issues
+   - Unreachable links
+2. Implement conflict resolution for duplicates and ambiguous matches
+3. Follow the testing strategy:
+   - Extension: Jest with `jest-webextension-mock`
+   - Server: Pytest with `pyfakefs`
+
+## Implementation Order
+
+1. Follow the recommended implementation sequence:
+   - Server API with dummy matching
+   - Basic extension UI
+   - Vault parsing
+   - Matching algorithm refinement
+   - Error handling
+   - Testing
+   - Documentation
+
+## Security & Performance
+
+1. Focus on local-only operation initially
+2. Implement caching for vault structure
+3. Consider batch processing for links when appropriate 

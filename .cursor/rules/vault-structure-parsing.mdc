@@ -1,0 +1,72 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Vault Structure Parsing
+
+This rule outlines the approach for parsing and representing Obsidian vault structures in the FixedPoint application.
+
+## Data Representation
+
+1. Use the `VaultNode` interface for representing vault elements:
+   ```typescript
+   interface VaultNode {
+     name: string;
+     path: string;
+     children: VaultNode[];
+     is_file: boolean;
+     content?: string;
+     metadata?: Record<string, any>;
+   }
+   ```
+
+2. Ensure all nodes contain the required properties:
+   - `name`: File or folder name
+   - `path`: Full path to the file or folder
+   - `children`: Array of child nodes (empty for files)
+   - `is_file`: Boolean flag to distinguish files from folders
+   - `content`: Optional field for file content (markdown files only)
+   - `metadata`: Optional field for parsed frontmatter
+
+## Parsing Implementation
+
+1. Implement file system traversal following this pattern:
+   ```python
+   def build_vault_tree(root_path):
+       root = VaultNode(name=os.path.basename(root_path), path=root_path)
+       for entry in os.scandir(root_path):
+           if entry.is_dir():
+               node = build_vault_tree(entry.path)
+           else:
+               node = parse_note_file(entry.path)
+           root.children.append(node)
+       return root
+   ```
+
+2. For note parsing, extract:
+   - Frontmatter metadata using `python-frontmatter`
+   - First heading as the title
+   - Cleaned content (with markdown formatting removed) for analysis
+
+3. Handle non-markdown files appropriately:
+   - Skip binary files
+   - Process text files with basic content extraction
+   - Flag attachments for potential reference
+
+## Performance Optimization
+
+1. Implement caching to avoid repeated parsing:
+   - Use file modification timestamps to detect changes
+   - Invalidate cache only when files are modified
+   - Use Watchdog for real-time filesystem monitoring
+
+2. Apply lazy loading for note content:
+   - Load metadata during initial traversal
+   - Load full content only when needed for matching
+   - Implement reference counting for frequently accessed notes
+
+3. Consider partial vault parsing:
+   - Allow specifying subfolders for targeted operations
+   - Implement incremental parsing for large vaults
+   - Provide progress feedback for time-consuming operations 

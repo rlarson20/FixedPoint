@@ -1,0 +1,82 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Implementation Order & Development Approach
+
+This rule outlines the recommended sequence and approach for implementing the FixedPoint project.
+
+## Implementation Sequence
+
+1. Follow this ordered development approach:
+   - Server API with dummy matching logic
+   - Basic extension UI
+   - Vault parsing implementation
+   - Matching algorithm iteration
+   - Error handling and edge cases
+   - Testing infrastructure
+   - Documentation writing
+
+2. Start with the first milestone goals:
+   - Manual vault path input in extension
+   - Basic filename-based matching
+   - Note creation in root folder fallback
+   - Local server with hardcoded test vault
+
+3. Implement subsequent features incrementally:
+   - Advanced matching algorithms
+   - UI refinements
+   - Error handling enhancements
+   - Performance optimizations
+
+## Development Methodology
+
+1. Apply iterative development:
+   - Build minimum viable components first
+   - Test each component thoroughly before integration
+   - Gather feedback and refine continuously
+
+2. Maintain testability throughout:
+   - Write tests alongside implementation
+   - Use mock objects for dependencies
+   - Ensure high code coverage for critical paths
+
+3. Focus on robust error handling:
+   - Implement error handling from the start
+   - Use defensive programming principles
+   - Test with invalid inputs and edge cases
+
+## Component Integration
+
+1. Establish clean interfaces between components:
+   - Well-defined API contracts
+   - Clear data formats and schemas
+   - Proper error propagation
+
+2. Develop integration tests:
+   - Test Firefox extension with server
+   - Test server with actual Obsidian vaults
+   - Verify end-to-end workflows
+
+3. Document integration requirements:
+   - Network configuration
+   - Permission requirements
+   - Configuration options
+
+## Distribution & Documentation
+
+1. Prepare deployment packages:
+   - Firefox Add-ons store package
+   - PyInstaller executable
+   - Setup scripts
+
+2. Create comprehensive documentation:
+   - Installation guides
+   - Configuration options
+   - Troubleshooting steps
+
+3. Provide setup verification tools:
+   - System compatibility check
+   - Self-test functionality
+   - Sample configuration 

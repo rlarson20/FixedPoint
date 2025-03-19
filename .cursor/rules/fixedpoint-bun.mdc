@@ -1,0 +1,72 @@
+# FixedPoint Bun Configuration
+
+## Description
+
+This rule specifies how Bun is used in the FixedPoint project, including specific configurations and requirements.
+
+## Project Requirements
+
+1. **Runtime Version**
+   - Use Bun v1.0.0 or later
+   - Ensure compatibility with Firefox WebExtension APIs
+
+2. **Build Configuration**
+   - Use `bun build` for TypeScript compilation
+   - Output directory: `./dist`
+   - Target: Firefox WebExtension
+
+3. **Dependencies**
+   - Required packages:
+     - `webextension-polyfill`
+     - `@types/firefox-webext-browser`
+   - Development dependencies:
+     - TypeScript
+     - ESLint
+     - TypeScript ESLint plugins
+
+4. **Scripts**
+   ```json
+   {
+     "scripts": {
+       "build": "bun build ./src/index.ts --outdir ./dist",
+       "watch": "bun --watch build ./src/index.ts --outdir ./dist",
+       "test": "bun test",
+       "lint": "bun run eslint src/**/*.ts"
+     }
+   }
+   ```
+
+5. **TypeScript Configuration**
+   - Use ESNext features
+   - Enable strict mode
+   - Use bundler module resolution
+   - Include Firefox WebExtension types
+
+## Implementation
+
+1. **Installation**
+   ```bash
+   bun install
+   ```
+
+2. **Development**
+   ```bash
+   bun --watch run dev
+   ```
+
+3. **Building**
+   ```bash
+   bun run build
+   ```
+
+4. **Testing**
+   ```bash
+   bun test
+   ```
+
+## Notes
+
+- Keep `bun.lockb` in version control
+- Use Bun's built-in TypeScript support
+- Leverage Bun's fast package installation
+- Use Bun's watch mode for development 

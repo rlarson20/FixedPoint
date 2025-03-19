@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Server Implementation
+
+This rule outlines the approach for developing the Python server component of the FixedPoint project.
+
+## Tech Stack & Dependencies
+
+1. Use Flask as the core framework:
+   - Lightweight and appropriate for simple API routes
+   - Easy to set up and maintain
+   - Suitable for local deployment
+
+2. Incorporate these key libraries:
+   - `Watchdog` for filesystem monitoring
+   - `python-frontmatter` for metadata parsing
+   - `scikit-learn` for TF-IDF vectorization
+
+## API Implementation
+
+1. Create the core `/process` endpoint:
+   ```python
+   @app.route('/process', methods=['POST'])
+   def process_links():
+       data = request.json
+       vault_tree = build_vault_tree(data['vault_path'])
+       results = []
+       
+       for link in data['links']:
+           best_match = find_best_note_match(link, vault_tree)
+           if best_match.score >= MIN_CONFIDENCE:
+               update_note(best_match.note_path, link)
+           else:
+               new_note_path = create_note(best_match.folder_path, link)
+           results.append(...)
+       
+       return jsonify(results)
+   ```
+
+2. Implement helper endpoints as needed:
+   - Vault path validation
+   - Server status/health check
+   - Configuration management
+
+3. Handle errors gracefully with appropriate HTTP status codes:
+   - 400 for invalid requests
+   - 404 for missing resources
+   - 500 for server-side errors with detailed error messages
+
+## Performance & Optimization
+
+1. Implement caching for vault structure:
+   - Cache invalidation only on vault changes
+   - Use Watchdog for filesystem monitoring
+   - Store in memory for fast access
+
+2. Consider async processing:
+   - Use background tasks for long-running operations
+   - Provide immediate feedback with job IDs
+   - Support batch processing for multiple links
+
+3. Implement appropriate logging:
+   - Detailed logs for debugging
+   - Performance metrics for optimization
+   - Error tracking for troubleshooting
+
+## Deployment & Security
+
+1. Focus on local-only operation initially:
+   - Listen only on localhost
+   - Document firewall configuration if needed
+   - Provide clear setup instructions
+
+2. If remote access is required:
+   - Implement JWT authentication
+   - Enforce HTTPS
+   - Add rate limiting and request validation
+
+3. Package for easy distribution:
+   - PyInstaller standalone executable
+   - Systemd service configuration for auto-start
+   - Appropriate OS-specific startup scripts 

@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Link-to-Note Matching Strategy
+
+This rule defines the approach for matching web links to appropriate notes and locations within the Obsidian vault.
+
+## Hybrid Matching Approach
+
+1. Implement the three-tiered matching strategy in order:
+   - First pass: Filename/keyword matching
+   - Second pass: TF-IDF content analysis
+   - Final fallback: Directory similarity using path components
+
+2. Extract meaningful keywords from URLs by:
+   - Parsing domain names (prioritize main domain parts)
+   - Analyzing path components
+   - Processing query parameters when relevant
+   - Removing common stop words and irrelevant terms
+
+3. Maintain the following confidence threshold approach:
+   - High confidence matches (>= MIN_CONFIDENCE): Update existing note
+   - Low confidence matches: Create new note in best matching folder
+
+## Implementation Details
+
+1. Use the defined function structure:
+   ```python
+   def find_best_match(link: str, vault_tree: VaultNode) -> MatchResult:
+       # Extract keywords from URL
+       keywords = extract_keywords(link)
+       
+       # Search existing notes
+       note_matches = search_notes(keywords)
+       if high_confidence_match(note_matches):
+           return note_matches[0]
+       
+       # Search directory structure
+       directory_matches = search_directories(keywords)
+       return best_directory_match(directory_matches)
+   ```
+
+2. Score matches using appropriate metrics:
+   - Filename keyword match: Direct string similarity
+   - TF-IDF content match: Cosine similarity score
+   - Directory match: Path component similarity weight
+
+3. Handle edge cases gracefully:
+   - No keywords extracted: Use domain name fallback
+   - Multiple equal-score matches: Use recency or path depth as tiebreaker
+   - Zero matches above threshold: Default to root or special "Inbox" folder
+
+## Performance Considerations
+
+1. Cache processed note content vectors when using TF-IDF
+2. Implement early termination if high-confidence match found
+3. Use incremental matching to avoid processing entire vault for each link 

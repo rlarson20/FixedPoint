@@ -1,0 +1,73 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Error Handling & Edge Cases
+
+This rule defines the approach for handling errors and edge cases in the FixedPoint project.
+
+## Common Failure Points
+
+1. Handle invalid vault paths gracefully:
+   - Server-side validation before processing
+   - Extension: Show clear validation feedback
+   - Provide helpful suggestions for correct path format
+
+2. Address permission issues:
+   - Server: Run with appropriate privileges
+   - Extension: Verify write access during setup
+   - Log detailed error messages for troubleshooting
+
+3. Manage unreachable links:
+   - Implement timeout/retry mechanism
+   - Queue system for failed links
+   - Allow manual retry of failed operations
+
+## Conflict Resolution
+
+1. Handle duplicate links appropriately:
+   - Use MD5 hash checking before adding
+   - Configurable duplicate handling options:
+     - Skip duplicates
+     - Append to existing entries
+     - Update metadata only
+
+2. Address ambiguous matches:
+   - Implement logging system for manual review
+   - Provide threshold tuning via configuration
+   - Allow user intervention for low-confidence matches
+
+## Error Logging & Reporting
+
+1. Implement comprehensive logging:
+   - Server: Structured logging with timestamps and severity
+   - Extension: Console logging for development
+   - User-friendly error messages for common issues
+
+2. Track and report errors effectively:
+   - Categorize errors by type and source
+   - Include relevant context in error reports
+   - Avoid exposing sensitive information in logs
+
+3. Provide debugging tools:
+   - Verbose mode for detailed troubleshooting
+   - Configuration validation utility
+   - Self-test functionality for common issues
+
+## Edge Case Handling
+
+1. Address large vault structures:
+   - Incremental processing
+   - Progress indicators for time-consuming operations
+   - Memory optimization for large datasets
+
+2. Handle unusual link formats:
+   - Support for various URL schemes
+   - Fallback mechanisms for non-standard URLs
+   - Custom handling for special sites/formats
+
+3. Manage vault structure changes:
+   - Detect and adapt to renamed/moved notes
+   - Handle deleted notes gracefully
+   - Maintain link integrity across structure changes 

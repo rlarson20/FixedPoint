@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "FixedPoint",
+  "version": "1.0.0",
+  "description": "Process browser links into Obsidian notes",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "http://localhost:5000/*"
+  ],
+  "browser_action": {
+    "default_popup": "dist/popup.html",
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    }
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": ["dist/background.js"],
+    "persistent": false
+  }
+} 
